@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ExpensesViewModel>
+
+@{
+    ViewData["Title"] = "Expenses Page";
+}
+
+<h1 class="center">Expenses Page</h1>
+<br />
+
+<table class="table-expenses">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Cost</th>
+        <th>Date</th>
+        <th>Category Name</th>
+        <th>Comment</th>
+    </tr>
+    @foreach(var expenses in Model)
+    {
+        <tr>
+            <td>@expenses.Id</td>
+            <td>@expenses.Name</td>
+            <td>@expenses.Cost.ToString("F2") ₴</td>
+            <td>@expenses.Date.ToShortDateString()</td>
+            <td>@expenses.CategoryName</td>
+            <td>@expenses.Comment</td>
+        </tr>
+    }
+</table>
