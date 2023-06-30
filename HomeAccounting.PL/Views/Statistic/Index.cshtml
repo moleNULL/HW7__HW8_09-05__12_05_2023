@@ -1,0 +1,81 @@
+﻿@model ExpensesStatisticViewModel
+
+@{
+    ViewData["Title"] = "Statistic Page";
+
+    var monthNames = new Dictionary<int, string>
+    {
+        [1]  = "January",
+        [2]  = "February",
+        [3]  = "March",
+        [4]  = "April",
+        [5]  = "May",
+        [6]  = "June",
+
+        [7]  = "July",
+        [8]  = "August",
+        [9]  = "September",
+        [10] = "October",
+        [11] = "November",
+        [12] = "December",
+    };
+}
+
+<h1 class="center">Statistic Page</h1>
+<br />
+
+<form class="form-statistic" method="get">
+    <label class="label-statistic" for="month">Select month:</label>
+    <select id="month" name="month">
+        @for (int i = 1; i <= 12; i++)
+        {
+            if (i == Model.ExpensesStatisticDate.SelectedMonth)
+            {
+                <option value="@i" selected>@monthNames[i]</option>
+            }
+            else
+            {
+               <option value="@i">@monthNames[i]</option>
+            }
+        }
+    </select>
+
+    <label class="label-statistic" for="year">Select year:</label>
+    <select id="year" name="year">
+        @for (int i = DateTime.Now.Year; i >= DateTime.Now.Year - Model.ExpensesStatisticDate.YearsBeforeCurrentYear; i--)
+        {
+            if (i == Model.ExpensesStatisticDate.SelectedYear)
+            {
+                <option value="@i" selected>@i</option>
+            }
+            else
+            {
+                <option value="@i">@i</option>
+            }
+        }
+    </select>
+        <input type="submit" class="btn-change" value="Filter"/>
+</form>
+
+<br />
+
+<table>
+    <tr>
+        <th>Category Name</th>
+        <th>Total Expenses</th>
+    </tr>
+    @foreach(var statistic in Model.ExpensesStatistic)
+    {
+        <tr>
+            <td>@statistic.CategoryName</td>
+            <td>@statistic.TotalExpenses.ToString("F2") ₴</td>
+        </tr>
+    }
+</table>
+
+<br />
+
+<div class="expenses-section">
+  <span class="expenses-label">Overall expenses:</span>
+  <span class="expenses-amount">@Model.ExpensesStatistic.Sum(s => s.TotalExpenses).ToString("F2") ₴</span>
+</div>

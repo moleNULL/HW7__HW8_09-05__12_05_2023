@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Add Category Page";
+}
+
+<h1 class="center">Category Page</h1>
+<br />
+
+<div class="button-container">
+    <a href="@Url.Action("Index", "Category")"><input type="button" class="action-button" value="Category List"/></a>
+    <input type="button" class="action-button" value="Add" disabled/>
+    <a href="@Url.Action("EditCategoryPage", "Category")"><input type="button" class="action-button" value="Edit"/></a>
+    <a href="@Url.Action("RemoveCategoryPage", "Category")"><input type="button" class="action-button" value="Remove"/></a>
+</div>
+
+<form method="post">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Category</th>
+        </tr>
+        @foreach(var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+            </tr>
+        }
+        <tr>
+            <td><input type="hidden" name="category.Id" /></td>
+            <td><input type="text" name="category.Name" required/></td>
+        </tr>
+    </table>
+
+    <br />
+
+    <div>
+        <input type="submit" class="btn-change" value="Add Category" />
+    </div>
+</form>
