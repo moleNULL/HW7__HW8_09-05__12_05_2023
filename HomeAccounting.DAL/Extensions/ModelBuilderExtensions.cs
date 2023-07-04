@@ -1,4 +1,4 @@
-﻿using HomeAccounting.DAL.Entities;
+﻿using HomeAccounting.DAL.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeAccounting.DAL.EFCore.Extensions

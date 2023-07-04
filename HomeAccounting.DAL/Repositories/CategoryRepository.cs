@@ -1,4 +1,4 @@
-﻿using HomeAccounting.DAL.Entities;
+﻿using HomeAccounting.DAL.Models.Entities;
 using HomeAccounting.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -33,7 +33,6 @@ namespace HomeAccounting.DAL.Repositories
             _logger.LogInformation($"Inserted row with id: {category.Id}");
         }
 
-        //_Batch_ batch operations in SQL | UpdateCategoriesBatchAsync()
         public async Task UpdateCategoriesAsync(IEnumerable<CategoryEntity> categories)
         {
             var modifiedCategories = categories.Where(category =>
@@ -51,23 +50,16 @@ namespace HomeAccounting.DAL.Repositories
             _logger.LogInformation($"Rows updated: {countUpdated}");
         }
 
-        public async Task<int> DeleteCategoriesAsync(IEnumerable<int> categoryIds)
+        public async Task DeleteCategoriesAsync(IEnumerable<int> categoryIds)
         {
-            //Where
-            foreach (int categoryId in categoryIds)
-            {
-                // Single
-                var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+            var categoriesToDelete = await _dbContext.Categories
+                    .Where(c => categoryIds.Contains(c.Id))
+                    .ToListAsync();
 
-                if (category is not null)
-                {
-                    _dbContext.Remove(category);
-                }
-            }
-
+            _dbContext.RemoveRange(categoriesToDelete);
             int countDeleted = await _dbContext.SaveChangesAsync();
 
-            return countDeleted;
+            _logger.LogInformation($"Rows deleted: {countDeleted}");
         }
     }
 }

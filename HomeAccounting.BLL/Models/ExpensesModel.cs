@@ -1,12 +1,12 @@
-﻿namespace HomeAccounting.PL.Models
+﻿namespace HomeAccounting.BLL.Models
 {
-    public class Expenses
+    public class ExpensesModel
     {
         public int Id { get; init; }
         public string Name { get; init; } = null!;
         public decimal Cost { get; init; }
         public DateTime Date { get; init; }
-        public int CategoryId { get; init; }
+        public string CategoryName { get; init; } = null!;
         public string? Comment { get; init; }
     }
 }

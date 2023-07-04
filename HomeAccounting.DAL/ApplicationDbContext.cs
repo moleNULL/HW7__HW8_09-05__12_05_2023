@@ -1,6 +1,6 @@
 ﻿using HomeAccounting.DAL.Configurations;
 using HomeAccounting.DAL.EFCore.Extensions;
-using HomeAccounting.DAL.Entities;
+using HomeAccounting.DAL.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeAccounting.DAL

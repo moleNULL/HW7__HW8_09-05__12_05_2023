@@ -1,4 +1,4 @@
-﻿using HomeAccounting.BLL.Dtos;
+﻿using HomeAccounting.BLL.Models.Dtos;
 
 namespace HomeAccounting.BLL.Services.Interfaces
 {
@@ -7,6 +7,6 @@ namespace HomeAccounting.BLL.Services.Interfaces
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
         Task AddCategoryAsync(CategoryDto category);
         Task UpdateCategoriesAsync(IEnumerable<CategoryDto> categories);
-        Task<int> DeleteCategoriesAsync(IEnumerable<int> categoryIds);
+        Task DeleteCategoriesAsync(IEnumerable<int> categoryIds);
     }
 }
