@@ -1,9 +1,9 @@
-﻿using HomeAccounting.BLL.Dtos;
+﻿using HomeAccounting.BLL.Models;
 
 namespace HomeAccounting.BLL.Services.Interfaces
 {
     public interface IStatisticService
     {
-        Task<ExpensesStatisticViewModelDto> GetExpenseStatisticAsync(int? year, int? month);
+        Task<StatisticCompositeModel> GetExpenseStatisticAsync(int? year, int? month);
     }
 }

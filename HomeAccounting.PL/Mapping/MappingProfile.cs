@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using HomeAccounting.BLL.Dtos;
-using HomeAccounting.DAL.Entities;
+using HomeAccounting.BLL.Models;
+using HomeAccounting.BLL.Models.Dtos;
+using HomeAccounting.DAL.Models.DataModels;
+using HomeAccounting.DAL.Models.Entities;
 using HomeAccounting.PL.Models;
 using HomeAccounting.PL.ViewModels;
 
@@ -10,18 +12,29 @@ namespace HomeAccounting.PL.Mapping
     {
         public MappingProfile()
         {
+            MapCategories();
+            MapExpenses();
+            MapStatistic();
+        }
+
+        private void MapCategories()
+        {
             CreateMap<CategoryEntity, CategoryDto>().ReverseMap();
-            CreateMap<ExpensesEntity, ExpensesDto>();
-            CreateMap<ExpensesStatisticEntity, ExpensesStatisticDto>();
-            CreateMap<ExpensesViewModelEntity, ExpensesViewModelDto>();
-
             CreateMap<CategoryDto, Category>().ReverseMap();
-            CreateMap<ExpensesStatisticViewModelDto, ExpensesStatisticViewModel>();
-            CreateMap<ExpensesViewModelDto, ExpensesViewModel>();
+        }
 
-            CreateMap<ExpensesStatisticViewModelDto, ExpensesStatisticViewModel>();
-            CreateMap<ExpensesStatisticDto, ExpensesStatistic>();
-            CreateMap<ExpensesStatisticDateDto, ExpensesStatisticDate>();
+        private void MapExpenses()
+        {
+            CreateMap<ExpensesDataModel, ExpensesModel>();
+            CreateMap<ExpensesModel, ExpensesViewModel>();
+        }
+
+        private void MapStatistic()
+        {
+            CreateMap<StatisticDataModel, StatisticModel>();
+            CreateMap<StatisticModel, StatisticViewModel>();
+            CreateMap<StatisticDateModel, StatisticDateViewModel>();
+            CreateMap<StatisticCompositeModel, StatisticCompositeViewModel>();
         }
     }
 }

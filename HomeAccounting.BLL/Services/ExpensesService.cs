@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HomeAccounting.BLL.Dtos;
+using HomeAccounting.BLL.Models;
 using HomeAccounting.BLL.Services.Interfaces;
 using HomeAccounting.DAL.Repositories.Interfaces;
 
@@ -16,12 +16,12 @@ namespace HomeAccounting.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ExpensesViewModelDto>> GetExpensesAsync()
+        public async Task<IEnumerable<ExpensesModel>> GetExpensesAsync()
         {
-            var expensesEntity = await _expensesRepository.GetExpensesAsync();
-            var expensesDto = _mapper.Map<IEnumerable<ExpensesViewModelDto>>(expensesEntity);
+            var expensesDataModel = await _expensesRepository.GetExpensesAsync();
+            var expensesModel = _mapper.Map<IEnumerable<ExpensesModel>>(expensesDataModel);
 
-            return expensesDto;
+            return expensesModel;
         }
     }
 }

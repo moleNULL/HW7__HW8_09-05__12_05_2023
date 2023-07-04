@@ -1,4 +1,4 @@
-﻿using HomeAccounting.DAL.Entities;
+﻿using HomeAccounting.DAL.Models.Entities;
 
 namespace HomeAccounting.DAL.Repositories.Interfaces
 {
@@ -7,6 +7,6 @@ namespace HomeAccounting.DAL.Repositories.Interfaces
         Task<IEnumerable<CategoryEntity>> GetCategoriesAsync();
         Task AddCategoryAsync(CategoryEntity category);
         Task UpdateCategoriesAsync(IEnumerable<CategoryEntity> categories);
-        Task<int> DeleteCategoriesAsync(IEnumerable<int> categoryIds);
+        Task DeleteCategoriesAsync(IEnumerable<int> categoryIds);
     }
 }

@@ -1,9 +1,9 @@
-﻿using HomeAccounting.DAL.Entities;
+﻿using HomeAccounting.DAL.Models.DataModels;
 
 namespace HomeAccounting.DAL.Repositories.Interfaces
 {
     public interface IStatisticRepository
     {
-        Task<IEnumerable<ExpensesStatisticEntity>> GetExpenseStatisticAsync(int year, int month);
+        Task<IEnumerable<StatisticDataModel>> GetExpenseStatisticAsync(int year, int month);
     }
 }

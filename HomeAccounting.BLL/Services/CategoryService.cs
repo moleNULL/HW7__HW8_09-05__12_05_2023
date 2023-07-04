@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HomeAccounting.BLL.Dtos;
+using HomeAccounting.BLL.Models.Dtos;
 using HomeAccounting.BLL.Services.Interfaces;
-using HomeAccounting.DAL.Entities;
+using HomeAccounting.DAL.Models.Entities;
 using HomeAccounting.DAL.Repositories.Interfaces;
 
 namespace HomeAccounting.BLL.Services
@@ -23,9 +23,9 @@ namespace HomeAccounting.BLL.Services
             await _categoryRepository.AddCategoryAsync(categoryEntity);
         }
 
-        public Task<int> DeleteCategoriesAsync(IEnumerable<int> categoryIds)
+        public async Task DeleteCategoriesAsync(IEnumerable<int> categoryIds)
         {
-            return _categoryRepository.DeleteCategoriesAsync(categoryIds);
+            await _categoryRepository.DeleteCategoriesAsync(categoryIds);
         }
 
         public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()

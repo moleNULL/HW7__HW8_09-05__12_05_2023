@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HomeAccounting.BLL.Dtos;
+using HomeAccounting.BLL.Models.Dtos;
 using HomeAccounting.BLL.Services.Interfaces;
 using HomeAccounting.PL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ namespace HomeAccounting.PL.Controllers
         public async Task<IActionResult> Index()
         {
             var categoriesDto = await _categoryService.GetCategoriesAsync();
-            var categories = _mapper.Map<IEnumerable<Category>>(categoriesDto);           
+            var categories = _mapper.Map<IEnumerable<Category>>(categoriesDto);
 
             return View(categories);
         }
@@ -45,16 +45,16 @@ namespace HomeAccounting.PL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditCategoryPage()
+        public async Task<IActionResult> UpdateCategoryPage()
         {
             var categoriesDto = await _categoryService.GetCategoriesAsync();
             var categories = _mapper.Map<IEnumerable<Category>>(categoriesDto);
 
-            return View(categories);
+            return View("EditCategoryPage", categories);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCategoryPage(IEnumerable<Category> categories)
+        public async Task<IActionResult> UpdateCategoryPage(IEnumerable<Category> categories)
         {
             var categoriesDto = _mapper.Map<IEnumerable<CategoryDto>>(categories);
             await _categoryService.UpdateCategoriesAsync(categoriesDto);
@@ -63,22 +63,18 @@ namespace HomeAccounting.PL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> RemoveCategoryPage()
+        public async Task<IActionResult> DeleteCategoryPage()
         {
             var categoriesDto = await _categoryService.GetCategoriesAsync();
             var categories = _mapper.Map<IEnumerable<Category>>(categoriesDto);
 
-            // _logger.LogInformation($"Returned {categories.Count()} rows");
-
-            return View(categories);
+            return View("RemoveCategoryPage", categories);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveCategoryPage(IEnumerable<int> categoryIds)
+        public async Task<IActionResult> DeleteCategoryPage(IEnumerable<int> categoryIds)
         {
-            int count = await _categoryService.DeleteCategoriesAsync(categoryIds);
-
-            // _logger.LogInformation($"Rows deleted: {count}");
+            await _categoryService.DeleteCategoriesAsync(categoryIds);
 
             return RedirectToAction("Index");
         }

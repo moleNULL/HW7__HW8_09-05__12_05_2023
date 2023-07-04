@@ -1,4 +1,4 @@
-﻿@model ExpensesStatisticViewModel
+﻿@model StatisticCompositeViewModel
 
 @{
     ViewData["Title"] = "Statistic Page";
@@ -29,7 +29,7 @@
     <select id="month" name="month">
         @for (int i = 1; i <= 12; i++)
         {
-            if (i == Model.ExpensesStatisticDate.SelectedMonth)
+            if (i == Model.StatisticDate.SelectedMonth)
             {
                 <option value="@i" selected>@monthNames[i]</option>
             }
@@ -42,9 +42,9 @@
 
     <label class="label-statistic" for="year">Select year:</label>
     <select id="year" name="year">
-        @for (int i = DateTime.Now.Year; i >= DateTime.Now.Year - Model.ExpensesStatisticDate.YearsBeforeCurrentYear; i--)
+        @for (int i = DateTime.Now.Year; i >= DateTime.Now.Year - Model.StatisticDate.YearsBeforeCurrentYear; i--)
         {
-            if (i == Model.ExpensesStatisticDate.SelectedYear)
+            if (i == Model.StatisticDate.SelectedYear)
             {
                 <option value="@i" selected>@i</option>
             }
@@ -64,7 +64,7 @@
         <th>Category Name</th>
         <th>Total Expenses</th>
     </tr>
-    @foreach(var statistic in Model.ExpensesStatistic)
+    @foreach(var statistic in Model.Statistic)
     {
         <tr>
             <td>@statistic.CategoryName</td>
@@ -77,5 +77,5 @@
 
 <div class="expenses-section">
   <span class="expenses-label">Overall expenses:</span>
-  <span class="expenses-amount">@Model.ExpensesStatistic.Sum(s => s.TotalExpenses).ToString("F2") ₴</span>
+  <span class="expenses-amount">@Model.Statistic.Sum(s => s.TotalExpenses).ToString("F2") ₴</span>
 </div>

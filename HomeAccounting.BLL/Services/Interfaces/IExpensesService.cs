@@ -1,9 +1,9 @@
-﻿using HomeAccounting.BLL.Dtos;
+﻿using HomeAccounting.BLL.Models;
 
 namespace HomeAccounting.BLL.Services.Interfaces
 {
     public interface IExpensesService
     {
-        Task<IEnumerable<ExpensesViewModelDto>> GetExpensesAsync();
+        Task<IEnumerable<ExpensesModel>> GetExpensesAsync();
     }
 }

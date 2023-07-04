@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using HomeAccounting.BLL.Dtos;
+using HomeAccounting.BLL.Enums;
+using HomeAccounting.BLL.Models;
 using HomeAccounting.BLL.Services.Interfaces;
 using HomeAccounting.DAL.Repositories.Interfaces;
 
@@ -16,26 +17,27 @@ namespace HomeAccounting.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<ExpensesStatisticViewModelDto> GetExpenseStatisticAsync(int? year, int? month)
+        public async Task<StatisticCompositeModel> GetExpenseStatisticAsync(int? year, int? month)
         {
+            // years before the current year to begin maintaining statistic from: currentYear - 1 = 2022 (2023 - 1)
             int yearsBeforeCurrentYear = 1;
 
             year ??= 2023;
             month ??= 5;
 
-            if (!IsValid(year.Value, month.Value, yearsBeforeCurrentYear))
+            if (!CheckValid(year.Value, month.Value, yearsBeforeCurrentYear))
             {
                 throw new ArgumentException($"Year must be in range between {DateTime.Now.Year - yearsBeforeCurrentYear}" +
-                    $" and {DateTime.Now.Year}\nMonth must be in range between 1 and 12");
+                    $" and {DateTime.Now.Year} && Month must be in range between 1 and 12");
             }
 
-            var monthStatisticEntity = await _statisticRepository.GetExpenseStatisticAsync(year.Value, month.Value);
-            var monthStatisticDto = _mapper.Map<IEnumerable<ExpensesStatisticDto>>(monthStatisticEntity);
+            var monthStatisticDataModel = await _statisticRepository.GetExpenseStatisticAsync(year.Value, month.Value);
+            var monthStatisticModel = _mapper.Map<IEnumerable<StatisticModel>>(monthStatisticDataModel);
 
-            return new ExpensesStatisticViewModelDto
+            return new StatisticCompositeModel
             {
-                ExpensesStatistic = monthStatisticDto,
-                ExpensesStatisticDate = new ExpensesStatisticDateDto
+                Statistic = monthStatisticModel,
+                StatisticDate = new StatisticDateModel
                 {
                     YearsBeforeCurrentYear = yearsBeforeCurrentYear,
                     SelectedMonth = month.Value,
@@ -44,14 +46,16 @@ namespace HomeAccounting.BLL.Services
             };
         }
 
-        private bool IsValid(int year, int month, int yearsBeforeCurrentYear)
+        private bool CheckValid(int year, int month, int yearsBeforeCurrentYear)
         {
+            // provided year should not be less than (currentYear - yearsBeforeCurrentYear, i.e. 2023 - 1 = 2022)
             if (year < DateTime.Now.Year - yearsBeforeCurrentYear || year > DateTime.Now.Year)
             {
                 return false;
             }
 
-            if (month > 12 || month < 1)
+            // provided months should be between 1 (January) and 12 (December)
+            if (month > (int)Month.December || month < (int)Month.January)
             {
                 return false;
             }

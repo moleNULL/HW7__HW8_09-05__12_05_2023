@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace Infrastructure
+﻿namespace HomeAccounting.PL.Helpers
 {
     public static class ConfigurationHelper
     {
